@@ -9,6 +9,7 @@ public class Explosion : MonoBehaviour
     [SerializeField] LayerMask layerMask;
     [SerializeField] float range;
     [SerializeField] int exploDmg = 20;
+    [SerializeField] bool Isennemy;
     // Start is called before the first frame update
     private void OnDestroy()
     {
@@ -20,9 +21,18 @@ public class Explosion : MonoBehaviour
 
         for (int i = 0; i < hit.Length; i++)
         {
-            Enemy enemy = hit[i].transform.GetComponent<Enemy>();
-            if (enemy == null) return;
-            enemy.Attack(exploDmg);
+            if (!Isennemy)
+            {
+                Enemy enemy = hit[i].transform.GetComponent<Enemy>();
+                if (enemy == null) return;
+                enemy.Attack(exploDmg);
+            }
+            else
+            {
+                BaseTower tour = hit[i].transform.GetComponent<BaseTower>();
+                if (tour == null) return;
+                Destroy(tour.gameObject);
+            }
 
 
         }

@@ -133,7 +133,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   visual: {fileID: 6913478966812639091, guid: 0abe296bf59726b449e3f2109d65f4d7, type: 3}
-  hp: 10
+  hp: 20
   baseSpeed: 1
   movementSpeed: 0
   argentGagner: 100
@@ -214,5 +214,6 @@ MonoBehaviour:
   layerMask:
     serializedVersion: 2
     m_Bits: 1024
-  range: 0
+  range: 4
   exploDmg: 20
+  Isennemy: 1

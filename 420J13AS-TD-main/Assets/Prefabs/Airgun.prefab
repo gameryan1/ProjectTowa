@@ -10,7 +10,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1394681021025112191}
   - component: {fileID: 4899647963924389562}
-  m_Layer: 0
+  m_Layer: 10
   m_Name: Airgun
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -62,7 +62,7 @@ GameObject:
   m_Component:
   - component: {fileID: 4796611877070713840}
   - component: {fileID: 5563928472005505072}
-  m_Layer: 0
+  m_Layer: 10
   m_Name: Isometric Diamond
   m_TagString: Untagged
   m_Icon: {fileID: 0}

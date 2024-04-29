@@ -85,7 +85,6 @@ public class GameTile : MonoBehaviour, IPointerEnterHandler,
     public void OnPointerDown(PointerEventData eventData)
     {
         if (tower != null) return;
-        if (!IsBlocked) return;
         if (!TouConstructeur.instance.Canbuild()) return;
         if (TouConstructeur.instance.tourSelec == 4 && spriteRenderer.color != Color.yellow)
         {
@@ -93,6 +92,7 @@ public class GameTile : MonoBehaviour, IPointerEnterHandler,
             SetWall();
             return;
         }
+        if (!IsBlocked) return;
         Shoptower temptower = TouConstructeur.instance.PrendreTourSelectionner();
         Player.player.DepenseCash(temptower.cout);
         tower = Instantiate(temptower.prefab,transform.position,Quaternion.identity);

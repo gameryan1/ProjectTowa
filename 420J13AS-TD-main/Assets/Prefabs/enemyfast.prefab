@@ -133,7 +133,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   visual: {fileID: 7275986104459472129}
   hp: 5
-  baseSpeed: 2
+  baseSpeed: 6
   movementSpeed: 0
   argentGagner: 7
 --- !u!50 &5947446245462321904
