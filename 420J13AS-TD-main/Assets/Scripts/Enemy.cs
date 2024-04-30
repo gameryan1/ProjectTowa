@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using Unity.VisualScripting;
 using UnityEngine;
 
 public class Enemy : MonoBehaviour
@@ -32,6 +33,7 @@ public class Enemy : MonoBehaviour
     {
         if (path.Count > 0)
         {
+            if (path.Peek().IsDestroyed()) Destroy(this.gameObject);
             Vector3 destPos = path.Peek().transform.position;
             transform.position = Vector3.MoveTowards(transform.position, destPos, movementSpeed * Time.deltaTime);
 

@@ -140,6 +140,7 @@ public class GameManager : MonoBehaviour
         spawnTile.SetEnemySpawn();
         var path = Pathfinding(spawnTile, TargetTile);
         var tile = TargetTile;
+
         while (tile != null)
         {
             pathToGoal.Add(tile);
@@ -197,6 +198,7 @@ public class GameManager : MonoBehaviour
             spawnTile.SetEnemySpawn();
             var path = Pathfinding(spawnTile, TargetTile);
             var tile = TargetTile;
+            pathToGoal = new List<GameTile>();
             while (tile != null)
             {
                 pathToGoal.Add(tile);
@@ -286,6 +288,7 @@ public class GameManager : MonoBehaviour
         spawnTile.SetEnemySpawn();
         var path = Pathfinding(spawnTile, TargetTile);
         var tile = TargetTile;
+        pathToGoal = new List<GameTile>();
         while (tile != null)
         {
             pathToGoal.Add(tile);
