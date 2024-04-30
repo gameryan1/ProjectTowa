@@ -53,6 +53,10 @@ public class GameManager : MonoBehaviour
         {
             ChangeToLvl2();
         }
+        if(currentLevel != level && level == 3)
+        {
+            ChangeToLvl3();
+        }
         
     }
 
@@ -155,6 +159,7 @@ public class GameManager : MonoBehaviour
     {
 
         StopAllCoroutines();
+        EnVague = false;
         for (int x = 0; x < ColCount; x++)
         {
             for (int y = 0; y < RowCount; y++)
@@ -183,6 +188,14 @@ public class GameManager : MonoBehaviour
                     gameTiles[x, y].TurnGrey();
                 }
             }
+            for (int y = 0; y <= 8; y++)
+            {
+                gameTiles[3, y].SetWall();
+            }
+            for (int y = 9; y >= 1; y--)
+            {
+                gameTiles[11, y].SetWall();
+            }
             foreach (var cas in gameTiles)
             {
                 if (cas.X == startX && cas.Y == startY)
@@ -206,25 +219,16 @@ public class GameManager : MonoBehaviour
                 tile = path[tile];
             }
             currentWave = 1;
+            ennemyEnVie = 0;
             StartCoroutine(WaveSart());
 
-        }
-
-
-
-        for (int y = 0; y <= 8; y++)
-        {
-            gameTiles[3, y].SetWall();
-        }
-        for (int y = 9; y >= 1; y--)
-        {
-            gameTiles[11, y].SetWall();
         }
         currentLevel = 1;
     }
     private void ChangeToLvl2()
     {
         StopAllCoroutines();
+        EnVague = false;
         for (int x = 0; x < ColCount; x++)
         {
             for (int y = 0; y < RowCount; y++)
@@ -296,6 +300,87 @@ public class GameManager : MonoBehaviour
             tile = path[tile];
         }
         currentWave = 1;
+        ennemyEnVie = 0;
+        StartCoroutine(WaveSart());
+
+
+    }
+    private void ChangeToLvl3()
+    {
+        StopAllCoroutines();
+        EnVague = false;
+        for (int x = 0; x < ColCount; x++)
+        {
+            for (int y = 0; y < RowCount; y++)
+            {
+                Destroy(gameTiles[x, y].gameObject);
+
+            }
+        }
+        ColCount = 15;
+        RowCount = 5;
+        gameTiles = new GameTile[ColCount, RowCount];
+
+        for (int x = 0; x < ColCount; x++)
+        {
+            for (int y = 0; y < RowCount; y++)
+            {
+                var spawnPosition = new Vector3(x, y, 0);
+                var cile = Instantiate(gameTilePrefab, spawnPosition, Quaternion.identity);
+                gameTiles[x, y] = cile.GetComponent<GameTile>();
+                gameTiles[x, y].GM = this;
+                gameTiles[x, y].X = x;
+                gameTiles[x, y].Y = y;
+
+                if ((x + y) % 2 == 0)
+                {
+                    gameTiles[x, y].TurnGrey();
+                }
+            }
+        }
+
+
+
+        for (int x = 0; x <= 10; x++)
+        {
+            gameTiles[x, 3].SetWall();
+        }
+        for (int x = 14; x >= 10; x--)
+        {
+            gameTiles[x, 1].SetWall();
+        }
+        currentLevel = 2;
+
+        startX = 0;
+        startY = 0;
+
+        endX = 14;
+        endY = 4;
+
+        foreach (var cas in gameTiles)
+        {
+            if (cas.X == startX && cas.Y == startY)
+            {
+                spawnTile = cas;
+            }
+
+            if (cas.X == endX && cas.Y == endY)
+            {
+                TargetTile = cas;
+            }
+        }
+        spawnTile.SetEnemySpawn();
+        var path = Pathfinding(spawnTile, TargetTile);
+        var tile = TargetTile;
+        pathToGoal = new List<GameTile>();
+        while (tile != null)
+        {
+            pathToGoal.Add(tile);
+            tile.SetPath(true);
+            tile = path[tile];
+        }
+        currentWave = 1;
+        ennemyEnVie = 0;
         StartCoroutine(WaveSart());
 
 

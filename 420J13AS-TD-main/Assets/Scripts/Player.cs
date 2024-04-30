@@ -28,6 +28,7 @@ public class Player : MonoBehaviour
     public void Extralife()
     {
         hp++;
+        bonusHP++;
     }
     public void SetHp()
     {
