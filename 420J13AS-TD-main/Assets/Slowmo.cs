@@ -5,7 +5,7 @@ using System.Runtime.CompilerServices;
 using UnityEditor;
 using UnityEngine;
 
-public class Slowmo : MonoBehaviour
+public class Slowmoaa : MonoBehaviour
 {
     [Header("Modificateur")]
     [SerializeField] LayerMask layerMask;
