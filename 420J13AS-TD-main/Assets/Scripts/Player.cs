@@ -17,11 +17,22 @@ public class Player : MonoBehaviour
         //hpText.text = $"HP: {hp + bonusHP}";
     }
 
+    public void PerdreHp()
+    {
+        if (hp-- <= 0) {
+            Application.LoadLevel(Application.loadedLevel);
+            hp = basehp;
+        }
+    }
+
     public void Extralife()
     {
         hp++;
     }
-
+    public void SetHp()
+    {
+        hp = basehp + bonusHP;
+    }
     public void GetXP()
     {
         exp++;

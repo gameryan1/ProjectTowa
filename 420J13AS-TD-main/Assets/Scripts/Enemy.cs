@@ -42,7 +42,7 @@ public class Enemy : MonoBehaviour
         }
         else
         {
-            Player.hp--;
+            Player.player.PerdreHp();
             Die();
         }
     }

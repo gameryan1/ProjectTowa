@@ -146,6 +146,7 @@ public class GameManager : MonoBehaviour
             tile.SetPath(true);
             tile = path[tile];
         }
+        
         StartCoroutine( WaveSart());
         
     }
@@ -202,6 +203,7 @@ public class GameManager : MonoBehaviour
                 tile.SetPath(true);
                 tile = path[tile];
             }
+            currentWave = 1;
             StartCoroutine(WaveSart());
 
         }
@@ -290,6 +292,7 @@ public class GameManager : MonoBehaviour
             tile.SetPath(true);
             tile = path[tile];
         }
+        currentWave = 1;
         StartCoroutine(WaveSart());
 
 
