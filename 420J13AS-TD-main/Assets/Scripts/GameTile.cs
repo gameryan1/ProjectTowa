@@ -115,4 +115,10 @@ public class GameTile : MonoBehaviour, IPointerEnterHandler,
         wallRenderer.enabled = true;
         IsBlocked = true;
     }
+
+    private void OnDestroy()
+    {
+        if (tower != null)
+        Destroy(tower.gameObject);
+    }
 }

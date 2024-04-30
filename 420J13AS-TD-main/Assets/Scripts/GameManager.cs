@@ -17,9 +17,9 @@ public class GameManager : MonoBehaviour
     GameTile[,] gameTiles;
     private GameTile spawnTile;
     public static GameManager instance;
-    const int ColCount = 20;
-    const int RowCount = 10;
-
+     int ColCount = 20;
+     int RowCount = 10;
+    private int currentLevel = 1;
     public int startX = 0;
     public int startY = 2;
 
@@ -43,6 +43,18 @@ public class GameManager : MonoBehaviour
     public GameTile TargetTile { get; internal set; }
     List<GameTile> pathToGoal = new List<GameTile>();
 
+    public void LevelChange(int level)
+    {
+        if (currentLevel != level && level == 1)
+        {
+            ChangeToLvl1();
+        }
+        if (currentLevel != level && level == 2)
+        {
+            ChangeToLvl2();
+        }
+        
+    }
 
     public void UpDifficulty()
     {
@@ -136,6 +148,151 @@ public class GameManager : MonoBehaviour
         }
         StartCoroutine( WaveSart());
         
+    }
+    private void ChangeToLvl1()
+    {
+
+        StopAllCoroutines();
+        for (int x = 0; x < ColCount; x++)
+        {
+            for (int y = 0; y < RowCount; y++)
+            {
+                Destroy(gameTiles[x, y].gameObject);
+
+            }
+        }
+        ColCount = 20;
+        RowCount = 10;
+        gameTiles = new GameTile[ColCount, RowCount];
+
+        for (int x = 0; x < ColCount; x++)
+        {
+            for (int y = 0; y < RowCount; y++)
+            {
+                var spawnPosition = new Vector3(x, y, 0);
+                var cile = Instantiate(gameTilePrefab, spawnPosition, Quaternion.identity);
+                gameTiles[x, y] = cile.GetComponent<GameTile>();
+                gameTiles[x, y].GM = this;
+                gameTiles[x, y].X = x;
+                gameTiles[x, y].Y = y;
+
+                if ((x + y) % 2 == 0)
+                {
+                    gameTiles[x, y].TurnGrey();
+                }
+            }
+            foreach (var cas in gameTiles)
+            {
+                if (cas.X == startX && cas.Y == startY)
+                {
+                    spawnTile = cas;
+                }
+
+                if (cas.X == endX && cas.Y == endY)
+                {
+                    TargetTile = cas;
+                }
+            }
+            spawnTile.SetEnemySpawn();
+            var path = Pathfinding(spawnTile, TargetTile);
+            var tile = TargetTile;
+            while (tile != null)
+            {
+                pathToGoal.Add(tile);
+                tile.SetPath(true);
+                tile = path[tile];
+            }
+            StartCoroutine(WaveSart());
+
+        }
+
+
+
+        for (int y = 0; y <= 8; y++)
+        {
+            gameTiles[3, y].SetWall();
+        }
+        for (int y = 9; y >= 1; y--)
+        {
+            gameTiles[11, y].SetWall();
+        }
+        currentLevel = 1;
+    }
+    private void ChangeToLvl2()
+    {
+        StopAllCoroutines();
+        for (int x = 0; x < ColCount; x++)
+        {
+            for (int y = 0; y < RowCount; y++)
+            {
+                Destroy(gameTiles[x, y].gameObject);
+
+            }
+        }
+        ColCount = 10;
+        RowCount = 10;
+        gameTiles = new GameTile[ColCount, RowCount];
+
+        for (int x = 0; x < ColCount; x++)
+        {
+            for (int y = 0; y < RowCount; y++)
+            {
+                var spawnPosition = new Vector3(x, y, 0);
+                var cile = Instantiate(gameTilePrefab, spawnPosition, Quaternion.identity);
+                gameTiles[x, y] = cile.GetComponent<GameTile>();
+                gameTiles[x, y].GM = this;
+                gameTiles[x, y].X = x;
+                gameTiles[x, y].Y = y;
+
+                if ((x + y) % 2 == 0)
+                {
+                    gameTiles[x, y].TurnGrey();
+                }
+            }
+        }
+
+
+
+        for (int x = 0; x <= 8; x++)
+        {
+            gameTiles[x, 6].SetWall();
+        }
+        for (int x = 9; x >= 1; x--)
+        {
+            gameTiles[x, 8].SetWall();
+        }
+        currentLevel = 2;
+
+         startX = 4;
+        startY = 0;
+
+         endX = 4;
+        endY = 9;
+
+        foreach (var cas in gameTiles)
+        {
+            if (cas.X == startX && cas.Y == startY)
+            {
+                spawnTile = cas;
+            }
+
+            if (cas.X == endX && cas.Y == endY)
+            {
+                TargetTile = cas;
+            }
+        }
+        spawnTile.SetEnemySpawn();
+        var path = Pathfinding(spawnTile, TargetTile);
+        var tile = TargetTile;
+        while (tile != null)
+        {
+            pathToGoal.Add(tile);
+            tile.SetPath(true);
+            tile = path[tile];
+        }
+        StartCoroutine(WaveSart());
+
+
     }
 
     private void Update()
